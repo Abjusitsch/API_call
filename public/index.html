@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>API CALL</title>
+    </head>
+    <body>
+        <h1>Daten aus der Datenbank</h1>
+        <button id="fetchDataButton">Daten abrufen</button>
+        <div id="data-container"></div>
+        <script>
+            document.getElementById('fetchDataButton').addEventListener('click', async () => {
+                const dataContainer = document.getElementById('data-container');
+                dataContainer.innerHTML = "Loading...";
+
+                try {
+                    const fetchResponse = await fetch('/fetch-and-save');
+                    const fetchResult = await fetchResponse.json();
+                
+
+                    const dataResponse = await fetch('/data');
+                    const data = await dataResponse.json();
+
+                    let html = '<ul>';
+                        data.forEach(item => {
+                            html += `<li>${item.value}</li>`;
+                        });
+                        html += '</ul>';
+                        dataContainer.innerHTML = html;
+
+                } catch (error) {
+                    dataContainer.innerHTML = 'Error: ' + error.message;
+                }
+            });
+ 
+        </script>
+    </body>
+</html>
